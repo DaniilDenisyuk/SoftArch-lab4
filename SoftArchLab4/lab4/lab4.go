@@ -30,29 +30,28 @@ func (add addCommand) Execute(loop engine.Handler) {
 func parse(commandLine string) engine.Command {
 	parts := strings.Fields(commandLine)
 	command := parts[0]
+	fmt.Println(parts)
 	args := parts[1:]
 	if command == "add" {
 		nums := make([]int, len(args))
 		for i, arg := range args {
-			if num, err := strconv.Atoi(arg); err != nil {
+			num, err := strconv.Atoi(arg)
+			if err != nil {
 				return printCommand{"SYNTAX ERROR: " + err.Error()}
-			} else {
-				nums[i] = num
 			}
-			cmd := addCommand{nums[0], nums[1]}
-			return cmd
+			nums[i] = num
 		}
-		return printCommand{"UNKNOWN COMMAND: " + command}
+		cmd := addCommand{nums[0], nums[1]}
+		return cmd
 	}
-	return nil
+	return printCommand{"UNKNOWN COMMAND: " + command}
 }
 
 func main() {
 	fmt.Println("in main")
-	inputFile := "../inputFile"
+	inputFile := "./inputFile"
 	eventLoop := new(engine.EventLoop)
-	fmt.Println("in main")
-	eventLoop.Start()
+	go eventLoop.Start()
 	if input, err := os.Open(inputFile); err == nil {
 		defer input.Close()
 		scanner := bufio.NewScanner(input)
@@ -61,6 +60,8 @@ func main() {
 			cmd := parse(commandLine) // parse the line to get an instance of Command
 			eventLoop.Post(cmd)
 		}
+	} else {
+		fmt.Println(err.Error())
 	}
 	eventLoop.AwaitFinish()
 }

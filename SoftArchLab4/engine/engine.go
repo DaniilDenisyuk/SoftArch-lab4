@@ -23,9 +23,7 @@ func (el *EventLoop) Start() {
 }
 
 func (el *EventLoop) Post(cmd Command) {
-	if el.messageQueue != nil {
-		el.messageQueue = append(el.messageQueue, cmd)
-	}
+	el.messageQueue = append(el.messageQueue, cmd)
 }
 
 func (el *EventLoop) AwaitFinish() {
