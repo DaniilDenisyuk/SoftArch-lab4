@@ -15,7 +15,7 @@ type EventLoop struct {
 
 func (el *EventLoop) Start() {
 	go func() {
-		for el != nil {
+		for {
 			if len(el.messageQueue) > 0 {
 				el.messageQueue[0].Execute(el)
 				el.messageQueue = el.messageQueue[1:]
