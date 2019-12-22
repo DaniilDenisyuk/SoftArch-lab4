@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
+	//ПОТРІБНО ЗМІНИТИ ВІДПОВІДНО ДО ВАШОГО GOPATH
 	"github.com/DaniilDenysiuk/SoftArchLab4/engine"
 )
 
@@ -30,7 +30,6 @@ func (add addCommand) Execute(loop engine.Handler) {
 func parse(commandLine string) engine.Command {
 	parts := strings.Fields(commandLine)
 	command := parts[0]
-	fmt.Println(parts)
 	args := parts[1:]
 	if command == "add" {
 		nums := make([]int, len(args))
@@ -48,10 +47,9 @@ func parse(commandLine string) engine.Command {
 }
 
 func main() {
-	fmt.Println("in main")
 	inputFile := "./inputFile"
 	eventLoop := new(engine.EventLoop)
-	go eventLoop.Start()
+	eventLoop.Start()
 	if input, err := os.Open(inputFile); err == nil {
 		defer input.Close()
 		scanner := bufio.NewScanner(input)

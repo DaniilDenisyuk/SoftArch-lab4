@@ -14,12 +14,14 @@ type EventLoop struct {
 }
 
 func (el *EventLoop) Start() {
-	for el != nil {
-		if len(el.messageQueue) > 0 {
-			el.messageQueue[0].Execute(el)
-			el.messageQueue = el.messageQueue[1:]
+	go func() {
+		for el != nil {
+			if len(el.messageQueue) > 0 {
+				el.messageQueue[0].Execute(el)
+				el.messageQueue = el.messageQueue[1:]
+			}
 		}
-	}
+	}()
 }
 
 func (el *EventLoop) Post(cmd Command) {
