@@ -49,7 +49,7 @@ func parse(commandLine string) engine.Command {
 
 func main() {
 	fmt.Println("in main")
-	inputFile := "github.com/DaniilDenysiuk/SoftArchLab4/inputFile"
+	inputFile := "../inputFile"
 	eventLoop := new(engine.EventLoop)
 	fmt.Println("in main")
 	eventLoop.Start()
